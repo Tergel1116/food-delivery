@@ -19,7 +19,7 @@ const port = 8000;
 // app.use("/foods-cart", cartRouter);
 app.use("/users", userRouter);
 
+connectToMongoDB();
 app.listen(port, async () => {
-  await connectToMongoDB();
   console.log(`Server is running on port ${port}`);
 });
