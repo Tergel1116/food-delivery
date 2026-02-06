@@ -100,11 +100,13 @@
 //     `,
 //   });
 // };
-
+import { Resend } from "resend";
 import nodemailer from "nodemailer";
 import { configDotenv } from "dotenv";
 
 configDotenv();
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const { AUTH_EMAIL, AUTH_PASS } = process.env;
 
@@ -117,7 +119,7 @@ const transport = nodemailer.createTransport({
 });
 
 export const verifyUserEmail = async (reciever: string, verifyLink: string) => {
-  await transport.sendMail({
+  await resend.emails.send({
     from: `Food Delivery ${AUTH_EMAIL}`,
     to: reciever,
     subject: "Verify user",
