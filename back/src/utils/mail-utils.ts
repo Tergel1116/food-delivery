@@ -106,8 +106,6 @@ import { configDotenv } from "dotenv";
 
 configDotenv();
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const { AUTH_EMAIL, AUTH_PASS } = process.env;
 
 const transport = nodemailer.createTransport({
@@ -117,6 +115,8 @@ const transport = nodemailer.createTransport({
     pass: AUTH_PASS,
   },
 });
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const verifyUserEmail = async (reciever: string, verifyLink: string) => {
   await resend.emails.send({
