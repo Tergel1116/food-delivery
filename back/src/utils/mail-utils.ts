@@ -106,21 +106,21 @@ import { configDotenv } from "dotenv";
 
 configDotenv();
 
-const { AUTH_EMAIL, AUTH_PASS } = process.env;
+// const { AUTH_EMAIL, AUTH_PASS } = process.env;
 
-const transport = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: AUTH_EMAIL,
-    pass: AUTH_PASS,
-  },
-});
+// const transport = nodemailer.createTransport({
+//   service: "gmail",
+//   auth: {
+//     user: AUTH_EMAIL,
+//     pass: AUTH_PASS,
+//   },
+// });
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const verifyUserEmail = async (reciever: string, verifyLink: string) => {
   await resend.emails.send({
-    from: `Food Delivery ${AUTH_EMAIL}`,
+    from: "onboarding@resend.dev",
     to: reciever,
     subject: "Verify user",
     html: `
