@@ -16,7 +16,7 @@ export const UserSignUp = async (req: Request, res: Response) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const now = Date.now();
+    // const now = Date.now();
     const newUser = await UserModel.create({
       email,
       password: hashedPassword,
@@ -24,7 +24,7 @@ export const UserSignUp = async (req: Request, res: Response) => {
       address,
       name,
       userName,
-      ttl: new Date(now + 1000 * 60 * 5),
+      // ttl: new Date(now + 1000 * 60 * 5),
     });
     const token = jwt.sign(
       { email: newUser.email, _id: newUser._id },

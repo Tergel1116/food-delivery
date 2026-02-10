@@ -23,7 +23,7 @@ export const UserSignIn = async (req: Request, res: Response) => {
       { email: user.email, _id: user._id },
       process.env.JWT_SECRET!,
     );
-    console.log(user);
+
     res.status(200).json({
       message: "Sign-in successful",
       success: true,
