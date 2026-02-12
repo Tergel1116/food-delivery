@@ -19,7 +19,7 @@ export const resetPassword = async (req: Request, res: Response) => {
     if (!user) {
       res.status(400).send("User not found");
       return;
-    }
+    } 
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     user.password = hashedPassword;

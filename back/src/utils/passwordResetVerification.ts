@@ -1,36 +1,29 @@
-
-
 import nodemailer from "nodemailer";
 import { configDotenv } from "dotenv";
+import { Resend } from "resend";
 
 configDotenv();
 
-const { AUTH_EMAIL, AUTH_PASS } = process.env;
-
-const transport = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: AUTH_EMAIL,
-    pass: AUTH_PASS,
-  },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const ResetPasswordVerificationEmail = async (
   reciever: string,
-  otpCode: string,
+  verifyLink: string,
 ) => {
-  await transport.sendMail({
-    from: `"Food Delivery Team" <${AUTH_EMAIL}>`,
+  await resend.emails.send({
+    from: "onboarding@resend.dev",
     to: reciever,
-    subject: "Нууц үг сэргээх баталгаажуулах код",
+    subject: "Нууц үг сэргээх баталгаажуулах линк",
     html: `
     <div style="font-family: Arial, sans-serif; text-align: center; padding: 20px; background-color: #f4f7f6;">
       <div style="max-width: 500px; margin: auto; background: white; padding: 40px; border-radius: 15px;">
         <h2 style="color: #333;">Нууц үг сэргээх</h2>
         <p>Таны баталгаажуулах код:</p>
-        <div style="font-size: 32px; font-weight: bold; color: #007bff; letter-spacing: 5px; padding: 20px; border: 2px dashed #007bff; display: inline-block;">
-          ${otpCode}
-        </div>
+        <a
+        href="${verifyLink}"
+        style="font-size: 32px; font-weight: bold; color: #007bff; letter-spacing: 5px; padding: 20px; border: 2px dashed #007bff; display: inline-block;">
+         mai
+        </a>
         <p style="color: #888; margin-top: 20px;">Энэ код 10 минутын дараа хүчингүй болно.</p>
       </div>
     </div>
@@ -38,4 +31,3 @@ export const ResetPasswordVerificationEmail = async (
     `,
   });
 };
-export default transport; 

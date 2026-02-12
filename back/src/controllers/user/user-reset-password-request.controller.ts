@@ -28,6 +28,11 @@ export const UserPasswordReset = async (req: Request, res: Response) => {
 
     // await ResetPasswordVerificationEmail(email, otpCode);
 
+    await ResetPasswordVerificationEmail(
+      email,
+      `${process.env.BACKEND_API}/users/verify/forgot?token=${resetToken}`,
+    );
+
     return res.status(200).json({ message: "Success" });
   } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
