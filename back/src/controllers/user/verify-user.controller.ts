@@ -7,7 +7,7 @@ import { UserModel } from "../models";
 export const verifyUser = async (req: Request, res: Response) => {
   try {
     const token = req.query.token as string;
-    console.log(token);
+
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET!) as {
       email: string;
     };
