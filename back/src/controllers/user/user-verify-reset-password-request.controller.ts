@@ -11,6 +11,7 @@ export const verifyResetPasswordRequest = async (
 
   if (!token) {
     res.status(400).json({ message: "Токен байхгүй байна" });
+    return;
   }
 
   try {
@@ -31,4 +32,3 @@ export const verifyResetPasswordRequest = async (
       .json({ message: "Токен хүчингүй эсвэл хугацаа нь дууссан байна" });
   }
 };
-    

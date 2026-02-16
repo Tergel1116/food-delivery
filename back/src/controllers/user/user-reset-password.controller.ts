@@ -6,10 +6,20 @@ import jwt from "jsonwebtoken";
 export const resetPassword = async (req: Request, res: Response) => {
   try {
     const { token, newPassword } = req.body;
-    if (!token || !newPassword) {
-      res.status(200).send({ message: "Missing data" });
+    // if (!token || !newPassword) {
+    //   res.status(400).send({ message: "Missing data" });
+    //   return;
+    // }
+
+    // const {  newPassword } = req.body;
+    if (!newPassword) {
+      res.status(400).send({ message: "Missing data" });
       return;
     }
+
+    // const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
+    //   userId: string;
+    // };
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
       userId: string;
@@ -19,7 +29,7 @@ export const resetPassword = async (req: Request, res: Response) => {
     if (!user) {
       res.status(400).send("User not found");
       return;
-    } 
+    }
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     user.password = hashedPassword;
