@@ -20,7 +20,6 @@ userRouter.post("/reset-password", resetPassword);
 userRouter.post("/forgot-password", UserPasswordReset);
 userRouter.get("/verify-reset-token", verifyResetPasswordRequest);
 
-
 // "name": "asd",
 // "userName": "asdf",
 // "phoneNumber": "99111199",

@@ -24,7 +24,10 @@ export const verifyResetPasswordRequest = async (
       res.status(400).json({ message: "Хэрэглэгч олдсонгүй" });
       return;
     }
-    res.status(200).json({ message: "Токен хүчинтэй", token });
+
+    const newToken = "asd";
+
+    res.status(200).redirect(`3000?update-pass?token=${newToken}`);
   } catch (error) {
     console.error(error);
     res
