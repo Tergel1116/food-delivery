@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
-import jwt from "jsonwebtoken";
-import { Query } from "mongoose";
-import { UserModel } from "../models";
+// import { Request, Response } from "express";
+// import jwt from "jsonwebtoken";
+// import { Query } from "mongoose";
+// import { UserModel } from "../models";
 
 // export const verifyResetPasswordRequest = async (
 //   req: Request,
@@ -36,10 +36,54 @@ import { UserModel } from "../models";
 //   }
 // };
 
-export const verifyResetPasswordRequest = async (
-  req: Request,
-  res: Response,
-) => {
+// export const verifyResetPasswordRequest = async (
+//   req: Request,
+//   res: Response,
+// ) => {
+//   const token = req.query.token as string;
+
+//   if (!token) {
+//     return res.status(400).json({ message: "Токен байхгүй байна" });
+//   }
+
+//   try {
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
+//       userId: string;
+//     };
+
+//     const user = await UserModel.findById(decoded.userId);
+//     if (!user) {
+//       return res.status(400).json({ message: "Хэрэглэгч олдсонгүй" });
+//     }
+
+//     // 🔥 ШИНЭ RESET TOKEN ҮҮСГЭХ
+//     const newToken = jwt.sign(
+//       {
+//         userId: user._id,
+//         type: "password-reset",
+//       },
+//       process.env.JWT_SECRET!,
+//       {
+//         expiresIn: "5m",
+//       },
+//     );
+
+//     // 🔥 Frontend рүү redirect
+//     return res.redirect(
+//       `https://food-delivery-nyoi.onrender.com/update-pass?token=${newToken}`,
+//     );
+//   } catch (error) {
+//     return res
+//       .status(400)
+//       .json({ message: "Токен хүчингүй эсвэл хугацаа нь дууссан байна" });
+//   }
+// };
+
+import { Request, Response } from "express";
+import jwt from "jsonwebtoken";
+import { UserModel } from "../models";
+
+export const verifyResetToken = async (req: Request, res: Response) => {
   const token = req.query.token as string;
 
   if (!token) {
@@ -49,30 +93,35 @@ export const verifyResetPasswordRequest = async (
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
       userId: string;
+      type: string;
     };
+
+    if (decoded.type !== "email-verify-reset") {
+      return res.status(400).json({ message: "Invalid token type" });
+    }
 
     const user = await UserModel.findById(decoded.userId);
     if (!user) {
       return res.status(400).json({ message: "Хэрэглэгч олдсонгүй" });
     }
 
-    // 🔥 ШИНЭ RESET TOKEN ҮҮСГЭХ
-    const newToken = jwt.sign(
+    // 🔥 Reset хийхэд зориулсан шинэ token
+    const resetToken = jwt.sign(
       {
         userId: user._id,
         type: "password-reset",
       },
       process.env.JWT_SECRET!,
-      {
-        expiresIn: "5m",
-      },
+      { expiresIn: "5m" },
     );
 
-    // 🔥 Frontend рүү redirect
-    return res.redirect(`http://localhost:3000/update-pass?token=${newToken}`);
+    // 🔁 Frontend рүү redirect
+    return res.redirect(
+      `http://localhost:3000/update-password?token=${resetToken}`,
+    );
   } catch (error) {
-    return res
-      .status(400)
-      .json({ message: "Токен хүчингүй эсвэл хугацаа нь дууссан байна" });
+    return res.status(400).json({
+      message: "Токен хүчингүй эсвэл хугацаа дууссан байна",
+    });
   }
 };
