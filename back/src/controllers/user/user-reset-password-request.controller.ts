@@ -46,7 +46,7 @@ import { UserModel } from "../models";
 import jwt from "jsonwebtoken";
 import { ResetPasswordVerificationEmail } from "../../utils/passwordResetVerification";
 
-export const forgotPassword = async (req: Request, res: Response) => {
+export const UserPasswordReset = async (req: Request, res: Response) => {
   const { email } = req.body;
 
   try {

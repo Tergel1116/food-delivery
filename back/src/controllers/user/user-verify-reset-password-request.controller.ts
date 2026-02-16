@@ -83,7 +83,10 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { UserModel } from "../models";
 
-export const verifyResetToken = async (req: Request, res: Response) => {
+export const verifyResetPasswordRequest = async (
+  req: Request,
+  res: Response,
+) => {
   const token = req.query.token as string;
 
   if (!token) {
@@ -117,7 +120,7 @@ export const verifyResetToken = async (req: Request, res: Response) => {
 
     // 🔁 Frontend рүү redirect
     return res.redirect(
-      `http://localhost:3000/update-password?token=${resetToken}`,
+      `https://food-delivery-nyoi.onrender.com/update-password?token=${resetToken}`,
     );
   } catch (error) {
     return res.status(400).json({
