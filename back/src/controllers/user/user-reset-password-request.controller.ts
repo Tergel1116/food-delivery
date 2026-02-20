@@ -68,6 +68,7 @@ export const UserPasswordReset = async (req: Request, res: Response) => {
       process.env.JWT_SECRET as string,
       { expiresIn: "10m" },
     );
+    console.log("This is forgot password controller");
     console.log(emailVerifyToken);
     await ResetPasswordVerificationEmail(
       email,
