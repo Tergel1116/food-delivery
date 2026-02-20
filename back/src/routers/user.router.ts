@@ -18,7 +18,7 @@ userRouter.get("/get-user", getUserData);
 userRouter.get("/user-refresh", refreshToken);
 userRouter.post("/reset-password", resetPassword);
 userRouter.post("/forgot-password", UserPasswordReset);
-userRouter.get("/verify-reset-token", verifyResetPasswordRequest);
+userRouter.get("/verify-reset-password", verifyResetPasswordRequest);
 
 // "name": "asd",
 // "userName": "asdf",
