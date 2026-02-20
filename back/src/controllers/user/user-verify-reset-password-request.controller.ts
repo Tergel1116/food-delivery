@@ -79,6 +79,56 @@
 //   }
 // };
 
+// import { Request, Response } from "express";
+// import jwt from "jsonwebtoken";
+// import { UserModel } from "../models";
+
+// export const verifyResetPasswordRequest = async (
+//   req: Request,
+//   res: Response,
+// ) => {
+//   const token = req.query.token as string;
+
+//   if (!token) {
+//     return res.status(400).json({ message: "Токен байхгүй байна" });
+//   }
+
+//   try {
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
+//       userId: string;
+//       type: string;
+//     };
+
+//     if (decoded.type !== "email-verify-reset") {
+//       return res.status(400).json({ message: "Invalid token type" });
+//     }
+
+//     const user = await UserModel.findById(decoded.userId);
+//     if (!user) {
+//       return res.status(400).json({ message: "Хэрэглэгч олдсонгүй" });
+//     }
+
+//     // 🔥 Reset хийхэд зориулсан шинэ token
+//     const resetToken = jwt.sign(
+//       {
+//         userId: user._id,
+//         type: "password-reset",
+//       },
+//       process.env.JWT_SECRET!,
+//       { expiresIn: "5m" },
+//     );
+
+//     // 🔁 Frontend рүү redirect
+//     return res.redirect(
+//       `https://food-delivery-nyoi.onrender.com/update-password?token=${resetToken}`,
+//     );
+//   } catch (error) {
+//     return res.status(400).json({
+//       message: "Токен хүчингүй эсвэл хугацаа дууссан байна",
+//     });
+//   }
+// };
+
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { UserModel } from "../models";
@@ -120,7 +170,7 @@ export const verifyResetPasswordRequest = async (
 
     // 🔁 Frontend рүү redirect
     return res.redirect(
-      `https://food-delivery-nyoi.onrender.com/update-password?token=${resetToken}`,
+      `https://food-delivery-nyoi.onrender.com/users/verify-reset-password?token=${resetToken}`,
     );
   } catch (error) {
     return res.status(400).json({

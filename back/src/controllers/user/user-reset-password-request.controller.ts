@@ -54,9 +54,10 @@ export const UserPasswordReset = async (req: Request, res: Response) => {
 
     // 🔐 Email enumeration хамгаалах
     if (!user) {
-      return res.status(200).json({
+      res.status(200).json({
         message: "Хэрэв бүртгэлтэй бол линк илгээгдэнэ.",
       });
+      return;
     }
 
     const emailVerifyToken = jwt.sign(
@@ -67,7 +68,7 @@ export const UserPasswordReset = async (req: Request, res: Response) => {
       process.env.JWT_SECRET as string,
       { expiresIn: "10m" },
     );
-
+    console.log(emailVerifyToken);
     await ResetPasswordVerificationEmail(
       email,
       `${process.env.BACKEND_API}/users/verify-reset-token?token=${emailVerifyToken}`,
