@@ -63,7 +63,7 @@ export const UserPasswordReset = async (req: Request, res: Response) => {
     const emailVerifyToken = jwt.sign(
       {
         userId: user._id,
-        type: "email-verify-reset",
+        type: "verify-reset-password",
       },
       process.env.JWT_SECRET as string,
       { expiresIn: "10m" },
