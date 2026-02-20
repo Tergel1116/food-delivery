@@ -55,7 +55,7 @@ export const UserPasswordReset = async (req: Request, res: Response) => {
     // 🔐 Email enumeration хамгаалах
     if (!user) {
       res.status(200).json({
-        message: "Хэрэв бүртгэлтэй бол линк илгээгдэнэ.",
+        message: "user not found",
       });
       return;
     }

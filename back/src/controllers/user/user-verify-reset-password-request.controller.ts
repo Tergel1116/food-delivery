@@ -149,7 +149,7 @@ export const verifyResetPasswordRequest = async (
       type: string;
     };
 
-    if (decoded.type !== "email-verify-reset") {
+    if (decoded.type !== "verify-reset-password") {
       return res.status(400).json({ message: "Invalid token type" });
     }
 
