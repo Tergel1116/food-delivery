@@ -72,7 +72,7 @@ export const UserPasswordReset = async (req: Request, res: Response) => {
     console.log(emailVerifyToken);
     await ResetPasswordVerificationEmail(
       email,
-      `${process.env.BACKEND_API}/users/verify-reset-token?token=${emailVerifyToken}`,
+      `${process.env.BACKEND_API}/users/verify-reset-password?token=${emailVerifyToken}`,
     );
 
     return res.status(200).json({
