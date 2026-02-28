@@ -1,4 +1,4 @@
-import { model, models, ObjectId, Schema, Model } from "mongoose";
+import { model, models, Schema, Model, Types } from "mongoose";
 
 export enum FoodOrderEnum {
   PENDING = "PENDING",
@@ -7,12 +7,12 @@ export enum FoodOrderEnum {
 }
 
 type FoodOrderItem = {
-  food: ObjectId;
+  food: Types.ObjectId;
   quantity: number;
 };
 
 type Order = {
-  user: ObjectId;
+  user: Types.ObjectId;
   totalPrice: number;
   foodOrderItems: FoodOrderItem[];
   status: FoodOrderEnum;
