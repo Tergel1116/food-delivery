@@ -97,7 +97,7 @@ export const resetPassword = async (req: Request, res: Response) => {
       type: string;
     };
 
-    if (decoded.type !== "password-reset") {
+    if (decoded.type !== "forgot-password") {
       res.status(400).json({ message: "Invalid token type" });
       return;
     }
