@@ -82,7 +82,7 @@ import { Request, Response } from "express";
 import { UserModel } from "../models";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-
+ 
 export const resetPassword = async (req: Request, res: Response) => {
   try {
     const { token, newPassword } = req.body;
