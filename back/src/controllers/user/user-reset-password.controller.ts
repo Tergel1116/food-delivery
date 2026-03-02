@@ -82,13 +82,14 @@ import { Request, Response } from "express";
 import { UserModel } from "../models";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
- 
+
 export const resetPassword = async (req: Request, res: Response) => {
   try {
     const { token, newPassword } = req.body;
 
     if (!token || !newPassword) {
-      return res.status(400).json({ message: "Missing data" });
+      res.status(400).json({ message: "Missing data" });
+      return;
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
@@ -97,12 +98,14 @@ export const resetPassword = async (req: Request, res: Response) => {
     };
 
     if (decoded.type !== "password-reset") {
-      return res.status(400).json({ message: "Invalid token type" });
+      res.status(400).json({ message: "Invalid token type" });
+      return;
     }
 
     const user = await UserModel.findById(decoded.userId);
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      res.status(404).json({ message: "User not found" });
+      return;
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
