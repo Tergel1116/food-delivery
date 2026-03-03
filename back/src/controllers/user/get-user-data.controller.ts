@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserModel } from "../models";
+import { UserModel } from "../../models";
 
 export const getUserData = async (req: Request, res: Response) => {
   try {
@@ -10,8 +10,6 @@ export const getUserData = async (req: Request, res: Response) => {
     res.status(400).send({ message: "FAIL" });
   }
 };
-
-
 
 // {
 //     "email": "tergelbaasan4@gmail.com",

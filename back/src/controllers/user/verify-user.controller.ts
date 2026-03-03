@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 import { configDotenv } from "dotenv";
 import jwt from "jsonwebtoken";
-import { UserModel } from "../models";
+import { UserModel } from "../../models";
 
 export const verifyUser = async (req: Request, res: Response) => {
   try {

@@ -46,8 +46,8 @@
 // };
 
 import { Request, Response } from "express";
-import { OrderModel } from "../models";
-import { FoodModel } from "../models";
+import { OrderModel } from "../../models";
+import { FoodModel } from "../../models";
 import mongoose from "mongoose";
 
 export const createFoodOrder = async (req: Request, res: Response) => {

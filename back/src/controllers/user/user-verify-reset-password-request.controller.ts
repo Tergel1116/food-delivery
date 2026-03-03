@@ -131,7 +131,7 @@
 
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { UserModel } from "../models";
+import { UserModel } from "../../models";
 
 export const verifyResetPasswordRequest = async (
   req: Request,

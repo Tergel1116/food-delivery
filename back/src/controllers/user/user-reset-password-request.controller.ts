@@ -42,13 +42,13 @@
 // };
 
 import { Request, Response } from "express";
-import { UserModel } from "../models";
+import { UserModel } from "../../models";
 import jwt from "jsonwebtoken";
 import { ResetPasswordVerificationEmail } from "../../utils/passwordResetVerification";
 
 export const UserPasswordReset = async (req: Request, res: Response) => {
-  const { email } = req.body; 
- 
+  const { email } = req.body;
+
   try {
     const user = await UserModel.findOne({ email });
 

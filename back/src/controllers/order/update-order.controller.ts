@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { FoodModel } from "../models";
-import { OrderModel } from "../models";
+import { FoodModel } from "../../models";
+import { OrderModel } from "../../models";
 import mongoose from "mongoose";
 
 const allowed = ["PENDING", "CANCELED", "DELIVERED"];

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserModel } from "../models";
+import { UserModel } from "../../models";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { verifyUserEmail } from "../../utils/mail-utils";

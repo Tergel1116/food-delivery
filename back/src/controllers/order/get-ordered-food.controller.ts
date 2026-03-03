@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { OrderModel } from "../models";
+import { OrderModel } from "../../models";
 import mongoose from "mongoose";
 
 export const getOrderedFood = async (
