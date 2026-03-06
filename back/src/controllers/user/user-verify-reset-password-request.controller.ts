@@ -150,10 +150,12 @@ export const verifyResetPasswordRequest = async (
     };
 
     if (decoded.type !== "verify-reset-password") {
+      console.log("true");
       return res.status(400).json({ message: "Invalid token type" });
     }
 
     const user = await UserModel.findById(decoded.userId);
+
     if (!user) {
       return res.status(400).json({ message: "Хэрэглэгч олдсонгүй" });
     }
@@ -166,11 +168,16 @@ export const verifyResetPasswordRequest = async (
       process.env.JWT_SECRET!,
       { expiresIn: "5m" },
     );
+    res.json({
+      message: "Токен амжилттай баталгаажлаа",
+      resetToken,
+    });
 
     return res.redirect(
-      `https://food-delivery-nyoi.onrender.com/users/verify-reset-password?token=${resetToken}`,
+      `https://food-delivery-nyoi.onrender.com/reset-password?token=${resetToken}`,
     );
   } catch (error) {
+    console.log(error);
     return res.status(400).json({
       message: "Токен хүчингүй эсвэл хугацаа дууссан байна",
     });

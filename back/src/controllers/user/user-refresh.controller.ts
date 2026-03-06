@@ -21,7 +21,7 @@ export const refreshToken = (req: Request, res: Response) => {
     res.status(400).json({ message: "Token!" });
     return;
   }
- 
+
   try {
     const decodedToken = jwt.verify(refreshToken as string, JWT_SECRET!) as {
       email: string;
