@@ -81,7 +81,7 @@
 import { Request, Response } from "express";
 import { UserModel } from "../../models";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import jwt, { decode } from "jsonwebtoken";
 
 export const resetPassword = async (req: Request, res: Response) => {
   try {
@@ -96,7 +96,7 @@ export const resetPassword = async (req: Request, res: Response) => {
       userId: string;
       type: string;
     };
-
+console.log(decoded)
     if (decoded.type !== "forgot-password") {
       res.status(400).json({ message: "Invalid token type" });
       return;
