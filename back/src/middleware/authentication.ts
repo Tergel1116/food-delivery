@@ -59,10 +59,6 @@ export const authentication = (
     const secret =
       process.env.ACCESS_TOKEN_SECRET || process.env.JWT_SECRET || "hello";
 
-    console.log("Token:", token);
-
-    console.log("Backend-ийн ашиглаж буй Secret:", secret);
-
     const decoded = jwt.verify(token as string, secret);
     (req as any).user = decoded;
     next();

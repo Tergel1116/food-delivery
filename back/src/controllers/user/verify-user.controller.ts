@@ -25,7 +25,7 @@ export const verifyUser = async (req: Request, res: Response) => {
 
     if (verifiedUser) {
       res.status(200).json({
-        message: "Email veryfied successfully",
+        message: "Email verified successfully",
         data: verifiedUser,
       });
       return;

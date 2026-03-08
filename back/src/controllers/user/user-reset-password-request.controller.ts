@@ -1,43 +1,44 @@
 // import { Request, Response } from "express";
-// import { UserModel } from "../models";
-// import bcrypt from "bcrypt";
-// import { ResetPasswordVerificationEmail } from "../../utils/passwordResetVerification";
+// import { UserModel } from "../../models";
 // import jwt from "jsonwebtoken";
+// import { ResetPasswordVerificationEmail } from "../../utils/passwordResetVerification";
 
 // export const UserPasswordReset = async (req: Request, res: Response) => {
 //   const { email } = req.body;
 
 //   try {
 //     const user = await UserModel.findOne({ email });
+
+//     // 🔐 Email enumeration хамгаалах
 //     if (!user) {
-//       res.status(400).json({ message: "User not fount" });
+//       res.status(200).json({
+//         message: "user not found",
+//       });
 //       return;
 //     }
 
-//     const resetToken = jwt.sign(
-//       { userId: user._id },
-//       process.env.JWT_SECRET as string,
+//     const emailVerifyToken = jwt.sign(
 //       {
-//         expiresIn: "10m",
+//         userId: user._id,
+//         type: "verify-reset-password",
 //       },
+//       process.env.JWT_SECRET as string,
+//       { expiresIn: "10m" },
 //     );
-//     // res
-//     //   .status(200)
-//     //   .send({ message: "Reset token generated", data: resetToken });
-//     // const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
-
-//     // await ResetPasswordVerificationEmail(email, otpCode);
-
+//     console.log("This is forgot password controller");
+//     console.log(emailVerifyToken);
 //     await ResetPasswordVerificationEmail(
 //       email,
-//       `${process.env.BACKEND_API}/users/verify-reset-token?token=${resetToken}`,
+//       `${process.env.BACKEND_API}/users/verify-reset-password?token=${emailVerifyToken}`,
 //     );
 
-//     return res
-//       .status(200)
-//       .json({ message: "Нууц үг сэргээх линк и-мэйлээр илгээгдлээ." });
+//     return res.status(200).json({
+//       message: "Нууц үг сэргээх линк илгээгдлээ.",
+//     });
 //   } catch (error) {
-//     return res.status(500).json({ message: "Internal server error" });
+//     return res.status(500).json({
+//       message: "Internal server error",
+//     });
 //   }
 // };
 
@@ -52,31 +53,27 @@ export const UserPasswordReset = async (req: Request, res: Response) => {
   try {
     const user = await UserModel.findOne({ email });
 
-    // 🔐 Email enumeration хамгаалах
     if (!user) {
-      res.status(200).json({
-        message: "user not found",
+      return res.status(200).json({
+        message: "If this email exists, a reset link has been sent.",
       });
-      return;
     }
 
-    const emailVerifyToken = jwt.sign(
+    const resetToken = jwt.sign(
       {
         userId: user._id,
-        type: "verify-reset-password",
+        type: "password-reset",
       },
       process.env.JWT_SECRET as string,
       { expiresIn: "10m" },
     );
-    console.log("This is forgot password controller");
-    console.log(emailVerifyToken);
-    await ResetPasswordVerificationEmail(
-      email,
-      `${process.env.BACKEND_API}/users/verify-reset-password?token=${emailVerifyToken}`,
-    );
+
+    const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
+
+    await ResetPasswordVerificationEmail(email, resetLink);
 
     return res.status(200).json({
-      message: "Нууц үг сэргээх линк илгээгдлээ.",
+      message: "Password reset link sent to email",
     });
   } catch (error) {
     return res.status(500).json({
