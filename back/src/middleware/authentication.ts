@@ -56,8 +56,7 @@ export const authentication = (
   const token = authHeader.split(" ")[1];
 
   try {
-    const secret =
-      process.env.ACCESS_TOKEN_SECRET || process.env.JWT_SECRET || "hello";
+    const secret = process.env.JWT_SECRET || "secret";
 
     const decoded = jwt.verify(token as string, secret);
     (req as any).user = decoded;
